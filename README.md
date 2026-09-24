@@ -15,7 +15,7 @@ direction agreement, and genes are ranked by an equal-weighted multi-evidence sc
 | `BIOT6900_Module2_Starter.ipynb` | Analysis notebook (Parts 1 to 3). Runs top to bottom with `Restart & Run All`. |
 | `scripts/get_data.py` | Downloads every dataset and writes the processed tables to `data/`. |
 | `data/` | Processed input tables (see [Data sources](#data-sources)). |
-| `data/targets_ad.csv` | **Deliverable.** Top 15 ranked AD targets. |
+| `data/targets_ad.csv` | **Deliverable:** Top 15 ranked AD targets. |
 | `data/targets_ad_full.csv` | Full ranked list (1,115 genes), passed on to Week 3. |
 | `REPORT.md` / `REPORT.pdf` | Written report. |
 
@@ -41,27 +41,27 @@ publicly available.
 | Genomics | All GWAS associations mapped to Alzheimer disease (`MONDO_0004975`). | [GWAS Catalog](https://www.ebi.ac.uk/gwas/efotraits/MONDO_0004975) ([release](https://ftp.ebi.ac.uk/pub/databases/gwas/releases/latest/)) | Open | 3,558 |
 | Part 1 demo | CPTAC breast cancer RNA, protein and somatic mutation. | [LinkedOmics CPTAC-BRCA](https://www.linkedomics.org/data_download/CPTAC-BRCA/) | Open | 23,121 / 12,621 / 9,448 |
 
-**Access.** Agora publishes gene-level summary statistics openly. The individual-level AMP-AD
+**Access:** Agora publishes gene-level summary statistics openly. The individual-level AMP-AD
 data behind them is hosted on Synapse and requires a Data Use Certificate (application). It was
 not needed and was not used.
 
-**Study design.** The layers are **unmatched**. Each is a per-gene summary with no sample
+**Study design:** The layers are **unmatched**. Each is a per-gene summary with no sample
 identifiers, so integration is at the gene level rather than the sample level.
 
 ## Methods
 
-1. **Preprocessing** (`scripts/get_data.py`)
+1. **Preprocessing** (`scripts/get_data.py`):
    - RNA: for each gene, keep the brain region with the largest absolute log2 fold change.
      Cerebellum is excluded because it is relatively spared in AD.
    - Protein: collapse multiple UniProt isoforms per gene symbol to the largest effect.
    - GWAS: split multi-gene associations into one row per gene and keep each gene's strongest
      association (maximum −log10 p).
    - RNA and protein p-values are Agora's multiple-testing-adjusted values (`adj_p_val`).
-2. **Harmonization.** Inner join on the HGNC gene symbol.
-3. **Concordance.** `concordant = sign(RNA lfc) == sign(protein lfc)`.
-4. **Scoring.** Per-layer magnitude (|RNA lfc|, |protein lfc|, −log10 p), rank-percentile
+2. **Harmonization:** Inner join on the HGNC gene symbol.
+3. **Concordance:** `concordant = sign(RNA lfc) == sign(protein lfc)`.
+4. **Scoring:** Per-layer magnitude (|RNA lfc|, |protein lfc|, −log10 p), rank-percentile
    normalized, then combined with equal weights (1/3 each).
-5. **Export.** Sort by score and write the top 15 and the full list to `data/`.
+5. **Export:** Sort by score and write the top 15 and the full list to `data/`.
 
 ## Key results
 
@@ -76,13 +76,13 @@ See `REPORT.pdf` for interpretation.
 
 ## Limitations
 
-- **No per-patient claims.** Unmatched summary data cannot show RNA/protein coupling within
+- **No per-patient claims:** Unmatched summary data cannot show RNA/protein coupling within
   individuals, unlike the sample-matched CPTAC analysis in Part 1.
-- **Proteomic coverage.** TREM2, CD33 and MS4A6A have strong RNA and GWAS evidence but are not
+- **Proteomic coverage:** TREM2, CD33 and MS4A6A have strong RNA and GWAS evidence but are not
   quantified in the TMT data, so the inner join drops them.
-- **Region mismatch.** RNA uses the strongest region per gene; protein is DLPFC only. Restricting
+- **Region mismatch:** RNA uses the strongest region per gene; protein is DLPFC only. Restricting
   RNA to DLPFC weakens known signal (APOE drops from rank 11 to 110).
-- **Linkage at 19q13.** APOC1 and TOMM40 inherit much of their GWAS signal from APOE.
+- **Linkage at 19q13:** APOC1 and TOMM40 inherit much of their GWAS signal from APOE.
 
 ## Issues encountered
 
