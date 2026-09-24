@@ -125,6 +125,8 @@ Both changes are statistically strong. Possible reasons:
 Not every "No" is real. BIN1 is marked not concordant, but its protein change is tiny and not
 significant (p = 0.43), so that is probably just noise.
 
+### What we can and cannot say
+
 #### What we can say
 
 - These genes have several separate kinds of evidence (RNA, protein and genetics).
@@ -145,7 +147,17 @@ I kept equal weights (1/3 each). Ranking each layer first stops APOE's huge gene
 taking over. Protein could get less weight because its changes are small, but I kept equal
 weights to match the course default.
 
-## 5. Conclusion
+### Conclusion
 
-> **TODO (you):** 2 to 3 sentences on what the list is useful for in Week 3, and what you would
-> change.
+Combining RNA, protein and genetics found known Alzheimer's genes like APOE, HLA-DRB1 and CLU
+near the top. That suggests the method works. The ranked list is ready for Week 3, and genes with
+strong evidence in all three layers, such as APOE, the HLA genes and GMPR, are the best places to
+start.
+
+If I did this again, I would:
+
+1. Not require all three layers, so genes like TREM2 are not lost just because protein wasn't
+   measured.
+2. Use RNA and protein from the same brain region.
+3. Count a gene as concordant only when both changes are significant.
+4. Treat APOE and its neighbours (APOC1, TOMM40) as one genetic signal.
